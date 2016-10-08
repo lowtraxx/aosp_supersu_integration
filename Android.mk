@@ -66,7 +66,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/etc
 LOCAL_UNSTRIPPED_PATH :=
-LOCAL_POST_INSTALL_CMD := chmod 0644 $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && rm $(TARGET_OUT)/bin/app_process && mv $(TARGET_OUT)/bin/app_process32 $(TARGET_OUT)/bin/app_process32_original &&  ln -s /system/xbin/daemonsu $(TARGET_OUT)/bin/app_process32 && cp $(TARGET_OUT)/bin/app_process32_original $(TARGET_OUT)/bin/app_process_init && chmod 0755 $(TARGET_OUT)/bin/app_process_init
+LOCAL_POST_INSTALL_CMD := chmod 0644 $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && rm $(TARGET_OUT)/bin/app_process && ln -s /system/xbin/daemonsu $(TARGET_OUT)/bin/app_process && mv $(TARGET_OUT)/bin/app_process32 $(TARGET_OUT)/bin/app_process32_original &&  ln -s /system/xbin/daemonsu $(TARGET_OUT)/bin/app_process32 && cp $(TARGET_OUT)/bin/app_process32_original $(TARGET_OUT)/bin/app_process_init && chmod 0755 $(TARGET_OUT)/bin/app_process_init
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
