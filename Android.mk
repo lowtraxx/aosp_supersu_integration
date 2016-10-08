@@ -6,7 +6,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/xbin
 LOCAL_UNSTRIPPED_PATH :=
-LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && chmod 0755 $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
+LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -16,7 +16,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/bin/.ext
 LOCAL_UNSTRIPPED_PATH :=
-LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && chmod 0777 $(LOCAL_MODULE_PATH) && chmod 0755 $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
+LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -26,7 +26,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/xbin
 LOCAL_UNSTRIPPED_PATH :=
-LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && chmod 0755 $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
+LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -36,7 +36,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/xbin
 LOCAL_UNSTRIPPED_PATH :=
-LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && chmod 0755 $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
+LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -46,7 +46,8 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/lib
 LOCAL_UNSTRIPPED_PATH :=
-LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && chmod 0644 $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && rm $(TARGET_OUT)/bin/install-recovery.sh
+LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE); \
+	if [ -f "$(TARGET_OUT)/bin/install-recovery.sh" ]; then rm $(TARGET_OUT)/bin/install-recovery.sh; fi;
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -56,7 +57,8 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := ETC
 LOCAL_MODULE_PATH := $(TARGET_OUT)/etc
 LOCAL_UNSTRIPPED_PATH :=
-LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && chmod 0755 $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && ln -s /system/etc/$(LOCAL_MODULE) $(TARGET_OUT)/bin/$(LOCAL_MODULE)
+LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE); \
+	ln -s /system/etc/$(LOCAL_MODULE) $(TARGET_OUT)/bin/$(LOCAL_MODULE);
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -66,7 +68,11 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/etc
 LOCAL_UNSTRIPPED_PATH :=
-LOCAL_POST_INSTALL_CMD := chmod 0644 $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && rm $(TARGET_OUT)/bin/app_process && ln -s /system/xbin/daemonsu $(TARGET_OUT)/bin/app_process && mv $(TARGET_OUT)/bin/app_process32 $(TARGET_OUT)/bin/app_process32_original &&  ln -s /system/xbin/daemonsu $(TARGET_OUT)/bin/app_process32 && cp $(TARGET_OUT)/bin/app_process32_original $(TARGET_OUT)/bin/app_process_init && chmod 0755 $(TARGET_OUT)/bin/app_process_init
+LOCAL_POST_INSTALL_CMD := if [ -f "$(TARGET_OUT)/bin/app_process" ]; then rm $(TARGET_OUT)/bin/app_process; fi; \
+	ln -s /system/xbin/daemonsu $(TARGET_OUT)/bin/app_process; \
+	if [ -f "$(TARGET_OUT)/bin/app_process32" ]; then mv $(TARGET_OUT)/bin/app_process32 $(TARGET_OUT)/bin/app_process32_original; fi; \
+ 	ln -s /system/xbin/daemonsu $(TARGET_OUT)/bin/app_process32; \
+	cp $(TARGET_OUT)/bin/app_process32_original $(TARGET_OUT)/bin/app_process_init;
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -76,5 +82,5 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/etc/init.d
 LOCAL_UNSTRIPPED_PATH :=
-LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE) && chmod 0744 $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
+LOCAL_POST_INSTALL_CMD := chattr -ia $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
 include $(BUILD_PREBUILT)
